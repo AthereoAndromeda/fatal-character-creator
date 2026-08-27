@@ -9,6 +9,7 @@ pub fn derive_sum(tokens: TokenStream) -> TokenStream {
     match &item.data {
         syn::Data::Struct(syn::DataStruct { fields, .. }) => {
             let mut v = Vec::new();
+            let field_len = fields.len();
 
             for field in fields {
                 if matches!(&field.ty, syn::Type::Path(path) if path.qself.is_none() && path.path.is_ident("i32"))
@@ -25,6 +26,10 @@ pub fn derive_sum(tokens: TokenStream) -> TokenStream {
                 impl #ident {
                     fn sum(&self) -> i32 {
                         0 #(+ #v )*
+                    }
+
+                    fn avg(&self) -> i32 {
+                        self.sum() / #field_len as i32
                     }
                 }
             }

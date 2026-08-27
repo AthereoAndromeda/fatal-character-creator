@@ -4,11 +4,11 @@ use crate::{dice::Dice, simulator::Simulator};
 
 #[derive(Debug)]
 pub struct Abilities {
-    physique: Physique,
-    charisma: Charisma,
-    dexterity: Dexterity,
-    intelligence: Intelligence,
-    wisdom: Wisdom,
+    pub physique: Physique,
+    pub charisma: Charisma,
+    pub dexterity: Dexterity,
+    pub intelligence: Intelligence,
+    pub wisdom: Wisdom,
 }
 
 impl Abilities {
@@ -172,6 +172,16 @@ mod test {
         }
         ");
 
-        assert_debug_snapshot!(a.sum_all(), @"2314");
+        assert_debug_snapshot!(a.physique.sum(), @"506");
+        assert_debug_snapshot!(a.charisma.sum(), @"510");
+        assert_debug_snapshot!(a.dexterity.sum(), @"222");
+        assert_debug_snapshot!(a.intelligence.sum(), @"434");
+        assert_debug_snapshot!(a.wisdom.sum(), @"642");
+
+        assert_debug_snapshot!(a.physique.avg(), @"126");
+        assert_debug_snapshot!(a.charisma.avg(), @"127");
+        assert_debug_snapshot!(a.dexterity.avg(), @"55");
+        assert_debug_snapshot!(a.intelligence.avg(), @"108");
+        assert_debug_snapshot!(a.wisdom.avg(), @"160");
     }
 }
