@@ -1,5 +1,0 @@
----
-source: src/dice.rs
-expression: roll
----
-12

@@ -52,8 +52,6 @@ macro_rules! gen_roll {
 
 gen_roll!(
     // (N die, sides of die)
-    (1, 20),
-    (2, 20),
     (1, 100),
     (10, 100),
 );
