@@ -20,12 +20,6 @@ impl Abilities {
         // SAFETY: 10d100 roll is guaranteed to fit in an i32, and is not NaN/Infinite
         let mut x = || unsafe { Self::calculate_value(sim.roll_10d100()) };
 
-        // let physique = Physique {
-        //     physical_fitness: (sim.roll_10d100()),
-        //     strength: Self::calculate_value(sim.roll_10d100()),
-        //     bodily_attractiveness: Self::calculate_value(sim.roll_10d100()),
-        //     health: Self::calculate_value(sim.roll_10d100()),
-        // };
         let physique = Physique {
             physical_fitness: x(),
             strength: x(),
