@@ -1,6 +1,5 @@
 mod dice;
 mod simulator;
-use rand::RngExt as _;
 use simulator::*;
 
 use crate::{
@@ -15,9 +14,6 @@ const TEST_SEED: u64 = 100;
 
 fn main() {
     let mut sim = GameSimulator::new();
-    let num = sim.rng().random::<u32>();
-    println!("{num}");
-
     let dice_roll = sim.roll_1d20();
     println!("{dice_roll}");
 
