@@ -1,26 +1,12 @@
-use rand::{RngExt, SeedableRng, rngs::ChaCha8Rng};
+mod simulator;
+use rand::RngExt as _;
+use simulator::*;
 
-trait Simulator {
-    fn rng(&mut self) -> impl RngExt;
-}
 
-struct TestSimulator {
-    rng: ChaCha8Rng,
-}
+mod chapter_1;
 
-impl TestSimulator {
-    fn new(seed: u64) -> Self {
-        let rng = ChaCha8Rng::seed_from_u64(seed);
-
-        Self { rng }
-    }
-}
-
-impl Simulator for TestSimulator {
-    fn rng(&mut self) -> impl RngExt {
-        &mut self.rng
-    }
-}
+#[cfg(test)]
+const TEST_SEED: u64 = 100;
 
 fn main() {
     let mut sim = TestSimulator::new(100);
@@ -30,19 +16,10 @@ fn main() {
 
 #[cfg(test)]
 mod test {
-    use insta::assert_snapshot;
-    use rand::RngExt;
-
-    use crate::{Simulator, TestSimulator};
+    use crate::{TEST_SEED, TestSimulator};
 
     #[rstest::fixture]
-    fn sim() -> TestSimulator {
-        TestSimulator::new(100)
-    }
-
-    #[rstest::rstest]
-    fn test(mut sim: impl Simulator) {
-        let random = sim.rng().random::<u32>();
-        assert_snapshot!(random, @"3980652914");
+    pub fn sim() -> TestSimulator {
+        TestSimulator::new(TEST_SEED)
     }
 }
