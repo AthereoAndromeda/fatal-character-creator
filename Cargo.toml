@@ -4,10 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+insta = { version = "1.48.0", features = ["ron"] }
+pastey = "0.2.3"
 rand = { version = "0.10.2", features = ["chacha", "simd_support"] }
 
 [dev-dependencies]
-cargo-nextest = "0.9.143"
 insta = { version = "1.48.0", features = ["yaml"] }
 rstest = "0.26.1"
 
