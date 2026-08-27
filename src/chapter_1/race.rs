@@ -47,8 +47,10 @@ impl From<u64> for Race {
     }
 }
 
-pub fn roll_race(sim: &mut impl Simulator) -> Race {
-    Race::from(sim.roll_1d100())
+impl Race {
+    pub fn roll_random(sim: &mut impl Simulator) -> Self {
+        Self::from(sim.roll_1d100())
+    }
 }
 
 #[cfg(test)]

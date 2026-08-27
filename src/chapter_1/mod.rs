@@ -1,7 +1,7 @@
 pub mod gender;
 pub mod race;
 
-use crate::{chapter_1::gender::roll_gender, simulator::Simulator};
+use crate::simulator::Simulator;
 
 #[derive(Debug)]
 pub struct Character {
@@ -11,10 +11,10 @@ pub struct Character {
 
 impl Character {
     pub fn roll_character(sim: &mut impl Simulator) -> Self {
-        let race = race::roll_race(sim);
+        let race = race::Race::roll_random(sim);
         Self {
             race,
-            gender: roll_gender(sim, &race),
+            gender: gender::Gender::roll_random(sim, &race),
         }
     }
 }
