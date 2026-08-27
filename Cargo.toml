@@ -8,6 +8,7 @@ insta = { version = "1.48.0", features = ["ron"] }
 pastey = "0.2.3"
 rand = { version = "0.10.2", features = ["chacha", "simd_support"] }
 rayon = "1.12.0"
+strum = { version = "0.28.0", features = ["derive", "strum_macros"] }
 
 [dev-dependencies]
 insta = { version = "1.48.0", features = ["yaml"] }
