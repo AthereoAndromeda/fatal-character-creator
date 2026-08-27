@@ -12,6 +12,7 @@
   packages = with pkgs; [
     git
     cargo-insta
+    cargo-nextest
     rust-analyzer
   ];
 
