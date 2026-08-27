@@ -1,0 +1,5 @@
+---
+source: src/dice.rs
+expression: roll
+---
+23
