@@ -11,6 +11,7 @@ mod chapter_1;
 const TEST_SEED: u64 = 100;
 
 fn main() {
+    let mut sim = GameSimulator::new();
     let num = sim.rng().random::<u32>();
     println!("{num}");
 

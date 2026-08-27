@@ -1,4 +1,7 @@
-use rand::{RngExt, SeedableRng, rngs::ChaCha8Rng};
+use rand::{
+    RngExt, SeedableRng,
+    rngs::{ChaCha8Rng, StdRng},
+};
 
 /// Source of all non-deterministic actions
 pub trait Simulator {
@@ -19,6 +22,24 @@ impl TestSimulator {
 }
 
 impl Simulator for TestSimulator {
+    fn rng(&mut self) -> impl RngExt {
+        &mut self.rng
+    }
+}
+
+pub struct GameSimulator {
+    rng: StdRng,
+}
+
+impl GameSimulator {
+    pub fn new() -> Self {
+        Self {
+            rng: rand::make_rng(),
+        }
+    }
+}
+
+impl Simulator for GameSimulator {
     fn rng(&mut self) -> impl RngExt {
         &mut self.rng
     }
