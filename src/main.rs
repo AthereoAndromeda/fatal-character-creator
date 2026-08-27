@@ -8,6 +8,7 @@ use crate::{
 };
 
 mod chapter_1;
+mod chapter_3;
 
 #[cfg(test)]
 const TEST_SEED: u64 = 100;
