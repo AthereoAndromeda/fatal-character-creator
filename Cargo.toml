@@ -1,9 +1,12 @@
+workspace = { members = ["fatal-macros"] }
+
 [package]
 name = "fatal-creator"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+fatal-macros = { path = "./fatal-macros" }
 insta = { version = "1.48.0", features = ["ron"] }
 pastey = "0.2.3"
 rand = { version = "0.10.2", features = ["chacha", "simd_support"] }

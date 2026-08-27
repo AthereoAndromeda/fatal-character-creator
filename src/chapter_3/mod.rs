@@ -1,3 +1,5 @@
+use fatal_macros::Summable;
+
 use crate::{dice::Dice, simulator::Simulator};
 
 #[derive(Debug)]
@@ -63,9 +65,17 @@ impl Abilities {
             wisdom,
         }
     }
+
+    pub fn sum_all(&self) -> i32 {
+        self.physique.sum()
+            + self.charisma.sum()
+            + self.dexterity.sum()
+            + self.intelligence.sum()
+            + self.wisdom.sum()
+    }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Summable)]
 struct Physique {
     physical_fitness: i32,
     strength: i32,
@@ -73,7 +83,7 @@ struct Physique {
     health: i32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Summable)]
 struct Charisma {
     facial: i32,
     vocal: i32,
@@ -81,7 +91,7 @@ struct Charisma {
     rhetorical: i32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Summable)]
 struct Dexterity {
     hand_eye_coordination: i32,
     agility: i32,
@@ -89,7 +99,7 @@ struct Dexterity {
     enunciation: i32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Summable)]
 struct Intelligence {
     language: i32,
     math: i32,
@@ -97,7 +107,7 @@ struct Intelligence {
     spatial: i32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Summable)]
 struct Wisdom {
     drive: i32,
     intuition: i32,
@@ -161,5 +171,7 @@ mod test {
             },
         }
         ");
+
+        assert_debug_snapshot!(a.sum_all(), @"2314");
     }
 }

@@ -13,6 +13,7 @@
     git
     cargo-insta
     cargo-nextest
+    cargo-expand
     rust-analyzer
   ];
 
