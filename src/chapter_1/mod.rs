@@ -1,3 +1,5 @@
+pub mod gender;
+
 use crate::{dice::Dice, simulator::Simulator};
 
 #[derive(Debug, Clone, Copy, strum::Display)]

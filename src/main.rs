@@ -3,7 +3,10 @@ mod simulator;
 use rand::RngExt as _;
 use simulator::*;
 
-use crate::{chapter_1::get_race, dice::Dice as _};
+use crate::{
+    chapter_1::{gender::roll_gender, get_race},
+    dice::Dice as _,
+};
 
 mod chapter_1;
 
@@ -20,6 +23,9 @@ fn main() {
 
     let race = get_race(&mut sim);
     dbg!(race);
+
+    let gender = roll_gender(&mut sim, &race);
+    dbg!(gender);
 }
 
 #[cfg(test)]
