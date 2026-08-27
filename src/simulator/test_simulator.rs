@@ -1,12 +1,4 @@
-use rand::{
-    RngExt, SeedableRng,
-    rngs::{ChaCha8Rng, StdRng},
-};
-
-/// Source of all non-deterministic actions
-pub trait Simulator {
-    fn rng(&mut self) -> impl RngExt;
-}
+use rand::{RngExt, SeedableRng as _, rngs::ChaCha8Rng};
 
 /// Simulator with PRNG
 pub struct TestSimulator {
@@ -21,25 +13,7 @@ impl TestSimulator {
     }
 }
 
-impl Simulator for TestSimulator {
-    fn rng(&mut self) -> impl RngExt {
-        &mut self.rng
-    }
-}
-
-pub struct GameSimulator {
-    rng: StdRng,
-}
-
-impl GameSimulator {
-    pub fn new() -> Self {
-        Self {
-            rng: rand::make_rng(),
-        }
-    }
-}
-
-impl Simulator for GameSimulator {
+impl super::Simulator for TestSimulator {
     fn rng(&mut self) -> impl RngExt {
         &mut self.rng
     }
