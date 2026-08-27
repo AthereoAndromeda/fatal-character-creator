@@ -1,6 +1,7 @@
 use crate::{dice::Dice, simulator::Simulator};
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, strum::Display)]
+#[cfg_attr(test, derive(strum::EnumIter))]
 pub enum Race {
     Anakim,
     Bugbear,
@@ -21,6 +22,8 @@ pub enum Race {
 }
 
 impl From<u64> for Race {
+    /// # Panics
+    /// Will panic if value is not within range 1..=100
     fn from(value: u64) -> Self {
         match value {
             1 => Self::Anakim,
@@ -46,4 +49,19 @@ impl From<u64> for Race {
 
 pub fn get_race(sim: &mut impl Simulator) -> Race {
     Race::from(sim.roll_1d100())
+}
+
+#[cfg(test)]
+mod test {
+    use super::Race;
+    use insta::assert_ron_snapshot;
+    use strum::IntoEnumIterator;
+
+    #[rstest::rstest]
+    fn test_display_names() {
+        for race in Race::iter() {
+            let disp = race.to_string();
+            assert_ron_snapshot!(disp);
+        }
+    }
 }
