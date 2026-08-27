@@ -3,7 +3,7 @@ mod simulator;
 use simulator::*;
 
 use crate::{
-    chapter_1::{Character, gender::roll_gender, roll_race},
+    chapter_1::{Character, gender::roll_gender, race::roll_race},
     dice::Dice as _,
 };
 
