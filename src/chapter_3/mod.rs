@@ -1,5 +1,6 @@
 use crate::{dice::Dice, simulator::Simulator};
 
+#[derive(Debug)]
 pub struct Abilities {
     physique: Physique,
     charisma: Charisma,
@@ -17,12 +18,60 @@ impl Abilities {
 
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
         // SAFETY: 10d100 roll is guaranteed to fit in an i32, and is not NaN/Infinite
-        let value = unsafe { Self::calculate_value(sim.roll_10d100()) };
+        let mut x = || unsafe { Self::calculate_value(sim.roll_10d100()) };
 
-        todo!()
+        // let physique = Physique {
+        //     physical_fitness: (sim.roll_10d100()),
+        //     strength: Self::calculate_value(sim.roll_10d100()),
+        //     bodily_attractiveness: Self::calculate_value(sim.roll_10d100()),
+        //     health: Self::calculate_value(sim.roll_10d100()),
+        // };
+        let physique = Physique {
+            physical_fitness: x(),
+            strength: x(),
+            bodily_attractiveness: x(),
+            health: x(),
+        };
+
+        let charisma = Charisma {
+            facial: x(),
+            vocal: x(),
+            kinetic: x(),
+            rhetorical: x(),
+        };
+
+        let dexterity = Dexterity {
+            hand_eye_coordination: x(),
+            agility: x(),
+            reaction_speed: x(),
+            enunciation: x(),
+        };
+
+        let intelligence = Intelligence {
+            language: x(),
+            math: x(),
+            analytic: x(),
+            spatial: x(),
+        };
+
+        let wisdom = Wisdom {
+            drive: x(),
+            intuition: x(),
+            common_sense: x(),
+            reflection: x(),
+        };
+
+        Self {
+            physique,
+            charisma,
+            dexterity,
+            intelligence,
+            wisdom,
+        }
     }
 }
 
+#[derive(Debug)]
 struct Physique {
     physical_fitness: i32,
     strength: i32,
@@ -30,6 +79,7 @@ struct Physique {
     health: i32,
 }
 
+#[derive(Debug)]
 struct Charisma {
     facial: i32,
     vocal: i32,
@@ -37,6 +87,7 @@ struct Charisma {
     rhetorical: i32,
 }
 
+#[derive(Debug)]
 struct Dexterity {
     hand_eye_coordination: i32,
     agility: i32,
@@ -44,6 +95,7 @@ struct Dexterity {
     enunciation: i32,
 }
 
+#[derive(Debug)]
 struct Intelligence {
     language: i32,
     math: i32,
@@ -51,6 +103,7 @@ struct Intelligence {
     spatial: i32,
 }
 
+#[derive(Debug)]
 struct Wisdom {
     drive: i32,
     intuition: i32,
@@ -60,7 +113,7 @@ struct Wisdom {
 
 #[cfg(test)]
 mod test {
-    use insta::assert_ron_snapshot;
+    use insta::{assert_debug_snapshot, assert_ron_snapshot};
 
     use super::*;
     use crate::set_snapshot_suffix;
@@ -75,5 +128,44 @@ mod test {
         set_snapshot_suffix!("{}", value);
         let value = unsafe { Abilities::calculate_value(value) };
         assert_ron_snapshot!(value);
+    }
+
+    #[rstest::rstest]
+    fn roll_abilities(mut sim: impl Simulator) {
+        let a = Abilities::roll_random(&mut sim);
+        assert_debug_snapshot!(a, @"
+        Abilities {
+            physique: Physique {
+                physical_fitness: 111,
+                strength: 137,
+                bodily_attractiveness: 66,
+                health: 192,
+            },
+            charisma: Charisma {
+                facial: 152,
+                vocal: 41,
+                kinetic: 181,
+                rhetorical: 136,
+            },
+            dexterity: Dexterity {
+                hand_eye_coordination: 23,
+                agility: 60,
+                reaction_speed: 6,
+                enunciation: 133,
+            },
+            intelligence: Intelligence {
+                language: 141,
+                math: 65,
+                analytic: 48,
+                spatial: 180,
+            },
+            wisdom: Wisdom {
+                drive: 192,
+                intuition: 125,
+                common_sense: 194,
+                reflection: 131,
+            },
+        }
+        ");
     }
 }
