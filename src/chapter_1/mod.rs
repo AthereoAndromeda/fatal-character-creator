@@ -10,7 +10,7 @@ pub struct Character {
 
 impl Character {
     pub fn roll_character(sim: &mut impl Simulator) -> Self {
-        let race = get_race(sim);
+        let race = roll_race(sim);
         Self {
             race,
             gender: roll_gender(sim, &race),
@@ -65,7 +65,7 @@ impl From<u64> for Race {
     }
 }
 
-pub fn get_race(sim: &mut impl Simulator) -> Race {
+pub fn roll_race(sim: &mut impl Simulator) -> Race {
     Race::from(sim.roll_1d100())
 }
 

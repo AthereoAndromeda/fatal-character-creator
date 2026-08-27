@@ -3,7 +3,7 @@ mod simulator;
 use simulator::*;
 
 use crate::{
-    chapter_1::{Character, gender::roll_gender, get_race},
+    chapter_1::{Character, gender::roll_gender, roll_race},
     dice::Dice as _,
 };
 
@@ -17,7 +17,7 @@ fn main() {
     let dice_roll = sim.roll_1d20();
     println!("{dice_roll}");
 
-    let race = get_race(&mut sim);
+    let race = roll_race(&mut sim);
     dbg!(race);
 
     let gender = roll_gender(&mut sim, &race);
