@@ -1,6 +1,22 @@
 pub mod gender;
 
-use crate::{dice::Dice, simulator::Simulator};
+use crate::{chapter_1::gender::roll_gender, dice::Dice, simulator::Simulator};
+
+#[derive(Debug)]
+pub struct Character {
+    race: Race,
+    gender: gender::Gender,
+}
+
+impl Character {
+    pub fn roll_character(sim: &mut impl Simulator) -> Self {
+        let race = get_race(sim);
+        Self {
+            race,
+            gender: roll_gender(sim, &race),
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy, strum::Display)]
 #[cfg_attr(test, derive(strum::EnumIter))]

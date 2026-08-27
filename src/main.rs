@@ -3,7 +3,7 @@ mod simulator;
 use simulator::*;
 
 use crate::{
-    chapter_1::{gender::roll_gender, get_race},
+    chapter_1::{Character, gender::roll_gender, get_race},
     dice::Dice as _,
 };
 
@@ -22,6 +22,9 @@ fn main() {
 
     let gender = roll_gender(&mut sim, &race);
     dbg!(gender);
+
+    let character = Character::roll_character(&mut sim);
+    dbg!(character);
 }
 
 #[cfg(test)]
