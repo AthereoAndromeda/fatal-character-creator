@@ -1,6 +1,20 @@
 use crate::{dice::Dice, simulator::Simulator};
 use fatal_macros::Summable;
 
+impl std::ops::Add for Abilities {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self {
+            physique: self.physique + rhs.physique,
+            charisma: self.charisma + rhs.charisma,
+            dexterity: self.dexterity + rhs.dexterity,
+            intelligence: self.intelligence + rhs.intelligence,
+            wisdom: self.wisdom + rhs.wisdom,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Default)]
 pub struct Abilities {
     pub physique: Physique,

@@ -1,6 +1,6 @@
 // Page 156 if roll
 
-use crate::{chapter_1::race::Race, dice::Dice, simulator::Simulator};
+use crate::{chapter_1::race::RaceKind, dice::Dice, simulator::Simulator};
 
 #[derive(Debug)]
 struct PhysiqueModifiers {
@@ -119,18 +119,18 @@ impl Gender {
         Self::Female(GenderModifiers::female())
     }
 
-    pub fn roll_random(sim: &mut impl Simulator, race: &Race) -> Self {
+    pub fn roll_random(sim: &mut impl Simulator, race: &RaceKind) -> Self {
         let num = sim.roll_1d100();
 
         let final_num = match race {
-            Race::Anakim
-            | Race::Ogre
-            | Race::CliffOgre
-            | Race::GruagachOgre
-            | Race::KinderFresserOgre
-            | Race::BorbyTroll
-            | Race::HillTroll
-            | Race::SubTroll => num + 10,
+            RaceKind::Anakim
+            | RaceKind::Ogre
+            | RaceKind::CliffOgre
+            | RaceKind::GruagachOgre
+            | RaceKind::KinderFresserOgre
+            | RaceKind::BorbyTroll
+            | RaceKind::HillTroll
+            | RaceKind::SubTroll => num + 10,
 
             _ => num,
         };

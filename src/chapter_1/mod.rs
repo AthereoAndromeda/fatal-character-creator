@@ -13,13 +13,14 @@ pub struct Character {
 impl Character {
     pub fn roll_character(sim: &mut impl Simulator) -> Self {
         let race = race::Race::roll_random(sim);
-        let gender = gender::Gender::roll_random(sim, &race);
+        let gender = gender::Gender::roll_random(sim, &race.kind);
         let abilities = Abilities::roll_random(sim);
+        let final_abilities = abilities + race.modifiers.sub_ability.clone();
 
         Self {
             race,
             gender,
-            abilities,
+            abilities: final_abilities,
         }
     }
 }

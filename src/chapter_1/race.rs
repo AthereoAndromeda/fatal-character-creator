@@ -2,9 +2,22 @@ use crate::{chapter_3::Abilities, dice::Dice as _, simulator::Simulator};
 
 #[derive(Debug, Clone, Default)]
 pub struct RaceModifiers {
-    sub_ability: Abilities,
-    base_current_armor: i32,
-    base_life_points: i32,
+    pub sub_ability: Abilities,
+    pub base_current_armor: i32,
+    pub base_life_points: i32,
+}
+
+impl From<RaceKind> for RaceModifiers {
+    fn from(value: RaceKind) -> Self {
+        match value {
+            RaceKind::Human => RaceModifiers {
+                sub_ability: Abilities::default(),
+                base_current_armor: 10,
+                base_life_points: 20,
+            },
+            _ => todo!(),
+        }
+    }
 }
 
 impl RaceModifiers {
@@ -17,9 +30,24 @@ impl RaceModifiers {
     }
 }
 
-#[derive(Debug, Clone, strum::Display)]
+#[derive(Debug, Clone)]
+pub struct Race {
+    pub kind: RaceKind,
+    pub modifiers: RaceModifiers,
+}
+
+impl Race {
+    pub fn roll_random(sim: &mut impl Simulator) -> Self {
+        let kind = RaceKind::roll_random(sim);
+        let modifiers = RaceModifiers::from(kind);
+
+        Self { kind, modifiers }
+    }
+}
+
+#[derive(Debug, Clone, Copy, strum::Display)]
 #[cfg_attr(test, derive(strum::EnumIter))]
-pub enum Race {
+pub enum RaceKind {
     Anakim,
     Bugbear,
     BlackDwarf,
@@ -27,7 +55,7 @@ pub enum Race {
     WhiteDwarf,
     DarkElf,
     LightElf,
-    Human(RaceModifiers),
+    Human,
     Kobold,
     Ogre,
     CliffOgre,
@@ -38,7 +66,7 @@ pub enum Race {
     SubTroll,
 }
 
-impl From<u64> for Race {
+impl From<u64> for RaceKind {
     /// # Panics
     /// Will panic if value is not within range 1..=100
     fn from(value: u64) -> Self {
@@ -50,7 +78,7 @@ impl From<u64> for Race {
             21 => Self::WhiteDwarf,
             22 => Self::DarkElf,
             23 => Self::LightElf,
-            24..=53 => Self::Human(RaceModifiers::human()),
+            24..=53 => Self::Human,
             54..=73 => Self::Kobold,
             74..=79 => Self::Ogre,
             80..=81 => Self::CliffOgre,
@@ -64,7 +92,7 @@ impl From<u64> for Race {
     }
 }
 
-impl Race {
+impl RaceKind {
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
         Self::from(sim.roll_1d100())
     }
@@ -72,13 +100,13 @@ impl Race {
 
 #[cfg(test)]
 mod test {
-    use super::Race;
+    use super::RaceKind;
     use insta::assert_ron_snapshot;
     use strum::IntoEnumIterator;
 
     #[rstest::rstest]
     fn test_display_names() {
-        for race in Race::iter() {
+        for race in RaceKind::iter() {
             let disp = race.to_string();
             assert_ron_snapshot!(disp);
         }
@@ -87,7 +115,7 @@ mod test {
     #[rstest::rstest]
     fn ensure_all_races_reachable() {
         for n in 1..=100 {
-            let _ = std::hint::black_box(Race::from(n));
+            let _ = std::hint::black_box(RaceKind::from(n));
         }
     }
 
@@ -99,6 +127,6 @@ mod test {
     #[should_panic]
     #[case(0)]
     fn panic_unreachable(#[case] n: u64) {
-        let _ = Race::from(n);
+        let _ = RaceKind::from(n);
     }
 }
