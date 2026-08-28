@@ -1,6 +1,23 @@
-use crate::{dice::Dice as _, simulator::Simulator};
+use crate::{chapter_3::Abilities, dice::Dice as _, simulator::Simulator};
 
-#[derive(Debug, Clone, Copy, strum::Display)]
+#[derive(Debug, Clone, Default)]
+pub struct RaceModifiers {
+    sub_ability: Option<Abilities>,
+    base_current_armor: i32,
+    base_life_points: i32,
+}
+
+impl RaceModifiers {
+    pub fn human() -> Self {
+        Self {
+            sub_ability: None,
+            base_current_armor: 10,
+            base_life_points: 20,
+        }
+    }
+}
+
+#[derive(Debug, Clone, strum::Display)]
 #[cfg_attr(test, derive(strum::EnumIter))]
 pub enum Race {
     Anakim,
@@ -10,7 +27,7 @@ pub enum Race {
     WhiteDwarf,
     DarkElf,
     LightElf,
-    Human,
+    Human(RaceModifiers),
     Kobold,
     Ogre,
     CliffOgre,
@@ -33,7 +50,7 @@ impl From<u64> for Race {
             21 => Self::WhiteDwarf,
             22 => Self::DarkElf,
             23 => Self::LightElf,
-            24..=53 => Self::Human,
+            24..=53 => Self::Human(RaceModifiers::human()),
             54..=73 => Self::Kobold,
             74..=79 => Self::Ogre,
             80..=81 => Self::CliffOgre,

@@ -2,7 +2,7 @@ use fatal_macros::Summable;
 
 use crate::{dice::Dice, simulator::Simulator};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Default)]
 pub struct Abilities {
     pub physique: Physique,
     pub charisma: Charisma,
@@ -75,40 +75,40 @@ impl Abilities {
     }
 }
 
-#[derive(Debug, Summable)]
-struct Physique {
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Physique {
     physical_fitness: i32,
     strength: i32,
     bodily_attractiveness: i32,
     health: i32,
 }
 
-#[derive(Debug, Summable)]
-struct Charisma {
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Charisma {
     facial: i32,
     vocal: i32,
     kinetic: i32,
     rhetorical: i32,
 }
 
-#[derive(Debug, Summable)]
-struct Dexterity {
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Dexterity {
     hand_eye_coordination: i32,
     agility: i32,
     reaction_speed: i32,
     enunciation: i32,
 }
 
-#[derive(Debug, Summable)]
-struct Intelligence {
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Intelligence {
     language: i32,
     math: i32,
     analytic: i32,
     spatial: i32,
 }
 
-#[derive(Debug, Summable)]
-struct Wisdom {
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Wisdom {
     drive: i32,
     intuition: i32,
     common_sense: i32,
