@@ -11,6 +11,7 @@
   # https://devenv.sh/packages/
   packages = with pkgs; [
     git
+    bacon
     cargo-insta
     cargo-nextest
     cargo-expand
