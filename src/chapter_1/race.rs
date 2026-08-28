@@ -2,7 +2,7 @@ use crate::{chapter_3::Abilities, dice::Dice as _, simulator::Simulator};
 
 #[derive(Debug, Clone, Default)]
 pub struct RaceModifiers {
-    sub_ability: Option<Abilities>,
+    sub_ability: Abilities,
     base_current_armor: i32,
     base_life_points: i32,
 }
@@ -10,7 +10,7 @@ pub struct RaceModifiers {
 impl RaceModifiers {
     pub fn human() -> Self {
         Self {
-            sub_ability: None,
+            sub_ability: Abilities::default(),
             base_current_armor: 10,
             base_life_points: 20,
         }
