@@ -66,4 +66,22 @@ mod test {
             assert_ron_snapshot!(disp);
         }
     }
+
+    #[rstest::rstest]
+    fn ensure_all_races_reachable() {
+        for n in 1..=100 {
+            let _ = std::hint::black_box(Race::from(n));
+        }
+    }
+
+    #[rstest::rstest]
+    #[should_panic]
+    #[case(1000)]
+    #[should_panic]
+    #[case(101)]
+    #[should_panic]
+    #[case(0)]
+    fn panic_unreachable(#[case] n: u64) {
+        let _ = Race::from(n);
+    }
 }
