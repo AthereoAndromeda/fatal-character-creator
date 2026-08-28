@@ -1,6 +1,5 @@
-use fatal_macros::Summable;
-
 use crate::{dice::Dice, simulator::Simulator};
+use fatal_macros::Summable;
 
 #[derive(Debug, Clone, Default)]
 pub struct Abilities {
@@ -64,14 +63,6 @@ impl Abilities {
             intelligence,
             wisdom,
         }
-    }
-
-    pub fn sum_all(&self) -> i32 {
-        self.physique.sum()
-            + self.charisma.sum()
-            + self.dexterity.sum()
-            + self.intelligence.sum()
-            + self.wisdom.sum()
     }
 }
 
