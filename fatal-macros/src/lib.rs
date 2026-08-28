@@ -12,20 +12,29 @@ pub fn derive_sum(tokens: TokenStream) -> TokenStream {
             let field_len = fields.len();
 
             for field in fields {
+                // Gets only i32 fields
                 if matches!(&field.ty, syn::Type::Path(path) if path.qself.is_none() && path.path.is_ident("i32"))
                 {
                     let id = field.ident.as_ref().unwrap();
-                    v.push(quote! {
-                        self.#id
-                    });
+                    v.push(id);
                 }
             }
 
             quote! {
                 #[automatically_derived]
+                impl ::std::ops::Add for #ident {
+                    type Output = Self;
+                    fn add(self, rhs: Self) -> Self::Output {
+                        Self {
+                            #(#v: self.#v + rhs.#v),*
+                        }
+                    }
+                }
+
+                #[automatically_derived]
                 impl #ident {
                     fn sum(&self) -> i32 {
-                        0 #(+ #v )*
+                        0 #(+ self.#v )*
                     }
 
                     fn avg(&self) -> i32 {
