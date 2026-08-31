@@ -7,3 +7,6 @@ inputs:
     inputs:
       nixpkgs:
         follows: nixpkgs
+
+imports:
+  - ./python
