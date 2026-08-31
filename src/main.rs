@@ -15,8 +15,6 @@ fn main() {
 
     let character = Character::roll_character(&mut sim);
     dbg!(character);
-
-    dbg!(crate::chapter_3::Abilities::default());
 }
 
 #[cfg(test)]
