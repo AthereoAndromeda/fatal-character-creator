@@ -1,5 +1,5 @@
 ---
-source: src/chapter_1/race.rs
+source: src/chapter_1/race/mod.rs
 expression: disp
 ---
 "Anakim"
