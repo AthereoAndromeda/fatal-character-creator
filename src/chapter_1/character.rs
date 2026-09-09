@@ -16,13 +16,13 @@ impl Character {
         let name = name::Name::roll_random(sim, &race.kind, &gender);
 
         let abilities = Abilities::roll_random(sim);
-        let final_abilities = abilities + race.modifiers.sub_ability.clone();
+        let abilities = abilities.apply_modifiers(&race, &gender);
 
         Self {
             race,
             name,
             gender,
-            abilities: final_abilities,
+            abilities,
         }
     }
 }

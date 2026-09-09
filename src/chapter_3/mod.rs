@@ -1,4 +1,8 @@
-use crate::{dice::Dice, simulator::Simulator};
+use crate::{
+    chapter_1::{gender::Gender, race::Race},
+    dice::Dice,
+    simulator::Simulator,
+};
 use fatal_macros::Summable;
 
 impl std::ops::Add for Abilities {
@@ -77,6 +81,10 @@ impl Abilities {
             intelligence,
             wisdom,
         }
+    }
+
+    pub fn apply_modifiers(self, race: &Race, gender: &Gender) -> Self {
+        self + race.modifiers.sub_ability.clone()
     }
 }
 
