@@ -2,7 +2,7 @@
 
 use crate::{chapter_1::race::RaceKind, dice::Dice, simulator::Simulator};
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Gender {
     Male,
     Female,
@@ -41,12 +41,17 @@ impl Gender {
     }
 }
 
-// #[cfg(test)]
-// mod test {
-//     use crate::chapter_1::gender::Gender;
+#[cfg(test)]
+mod test {
+    use super::*;
 
-//     #[test]
-//     fn race_modifier() {
-//         Gender
-//     }
-// }
+    #[test]
+    fn get_male() {
+        assert_eq!(Gender::Male, Gender::male())
+    }
+
+    #[test]
+    fn get_female() {
+        assert_eq!(Gender::Female, Gender::female())
+    }
+}
