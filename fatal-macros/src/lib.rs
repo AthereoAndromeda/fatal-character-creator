@@ -1,5 +1,5 @@
 use proc_macro::TokenStream;
-use quote::quote;
+use quote::{format_ident, quote};
 
 #[proc_macro_derive(Summable)]
 pub fn derive_sum(tokens: TokenStream) -> TokenStream {
@@ -33,12 +33,52 @@ pub fn derive_sum(tokens: TokenStream) -> TokenStream {
 
                 #[automatically_derived]
                 impl #ident {
-                    fn sum(&self) -> i32 {
+                    pub fn sum(&self) -> i32 {
                         0 #(+ self.#v )*
                     }
 
-                    fn avg(&self) -> i32 {
+                    pub fn avg(&self) -> i32 {
                         self.sum() / #field_len as i32
+                    }
+                }
+            }
+            .into()
+        }
+
+        _ => unimplemented!(),
+    }
+}
+
+#[proc_macro_derive(GenderModifiers)]
+pub fn apply_gender_modifiers(tokens: TokenStream) -> TokenStream {
+    let item = syn::parse_macro_input!(tokens as syn::DeriveInput);
+    let ident = item.ident;
+
+    match &item.data {
+        syn::Data::Struct(syn::DataStruct { fields, .. }) => {
+            let mut v = Vec::new();
+
+            for field in fields {
+                let id = field.ident.as_ref().unwrap();
+                v.push(id);
+            }
+
+            let ident_v = v
+                .iter()
+                .map(|x| format_ident!("var_{}", x))
+                .collect::<Vec<_>>();
+
+            quote! {
+                impl #ident {
+                    pub fn apply_gender_modifiers(&self, modifiers: Self) -> Self {
+                        #(
+                            let #ident_v = self.#v as f32 * ((modifiers.#v as f32 / 100.) + 1.);
+                            let #ident_v = unsafe { #ident_v.to_int_unchecked::<i32>() };
+                        )*
+
+                        Self {
+                            #(#v: #ident_v),*
+                        }
                     }
                 }
             }
