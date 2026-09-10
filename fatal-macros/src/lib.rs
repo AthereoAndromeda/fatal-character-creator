@@ -72,8 +72,7 @@ pub fn apply_gender_modifiers(tokens: TokenStream) -> TokenStream {
                 impl #ident {
                     pub fn apply_gender_modifiers(&self, modifiers: Self) -> Self {
                         #(
-                            let #ident_v = self.#v as f32 * ((modifiers.#v as f32 / 100.) + 1.);
-                            let #ident_v = unsafe { #ident_v.to_int_unchecked::<i32>() };
+                            let #ident_v = (self.#v * ((100 + modifiers.#v))).div_euclid(100);
                         )*
 
                         Self {
