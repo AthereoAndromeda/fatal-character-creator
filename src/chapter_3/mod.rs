@@ -162,8 +162,8 @@ impl Abilities {
         let abilities = self + race.modifiers.sub_ability.clone();
 
         let modifiers = match gender {
-            Gender::Male(m) => m,
-            Gender::Female(m) => m,
+            Gender::Male => Self::male(),
+            Gender::Female => Self::female(),
         };
 
         // TODO: Modify percentage based

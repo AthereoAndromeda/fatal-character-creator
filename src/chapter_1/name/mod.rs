@@ -15,7 +15,7 @@ impl Name {
 
         let (first_name, last_name) = match race {
             RaceKind::Anakim | RaceKind::Human => match gender {
-                Gender::Male(_) => (
+                Gender::Male => (
                     names_json
                         .human_male()
                         .get(&sim.roll_1d1000())
@@ -28,7 +28,7 @@ impl Name {
                         .to_string(),
                 ),
 
-                Gender::Female(_) => (
+                Gender::Female => (
                     names_json
                         .human_female()
                         .get(&sim.roll_1d100())

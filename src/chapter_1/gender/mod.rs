@@ -1,20 +1,20 @@
 // Page 156 if roll
 
-use crate::{chapter_1::race::RaceKind, chapter_3::Abilities, dice::Dice, simulator::Simulator};
+use crate::{chapter_1::race::RaceKind, dice::Dice, simulator::Simulator};
 
 #[derive(Debug)]
 pub enum Gender {
-    Male(Abilities),
-    Female(Abilities),
+    Male,
+    Female,
 }
 
 impl Gender {
     pub fn male() -> Self {
-        Self::Male(Abilities::male())
+        Self::Male
     }
 
     pub fn female() -> Self {
-        Self::Female(Abilities::female())
+        Self::Female
     }
 
     pub fn roll_random(sim: &mut impl Simulator, race: &RaceKind) -> Self {
@@ -34,9 +34,9 @@ impl Gender {
         };
 
         if final_num > 52 {
-            Gender::Male(Abilities::male())
+            Gender::Male
         } else {
-            Gender::Female(Abilities::female())
+            Gender::Female
         }
     }
 }
