@@ -9,9 +9,25 @@ pub struct Race {
     pub modifiers: RaceModifiers,
 }
 
+impl From<RaceKind> for Race {
+    fn from(value: RaceKind) -> Self {
+        match value {
+            RaceKind::Human => Self::human(),
+            _ => todo!(),
+        }
+    }
+}
+
 impl Race {
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
         let kind = RaceKind::roll_random(sim);
+        let modifiers = RaceModifiers::from(kind);
+
+        Self { kind, modifiers }
+    }
+
+    pub fn human() -> Self {
+        let kind = RaceKind::Human;
         let modifiers = RaceModifiers::from(kind);
 
         Self { kind, modifiers }
