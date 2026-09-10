@@ -1,6 +1,6 @@
 // Page 947
 
-use std::{collections::HashMap, ops::RangeInclusive};
+use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 // Required a d1000 roll.
@@ -91,18 +91,6 @@ pub struct RaceNamesJSON {
     kinderfresser: KinderFresserNames,
     borb_hill: BorbNames,
     sub_troll: SubterraneanTrollNames,
-}
-
-#[derive(Debug, Clone)]
-pub enum EntryIdx {
-    Range(RangeInclusive<i32>),
-    Int(i32),
-}
-
-#[derive(Debug, Clone)]
-pub struct NameEntry {
-    pub idx: EntryIdx,
-    pub name: String,
 }
 
 impl RaceNamesJSON {
