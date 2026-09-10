@@ -1,122 +1,130 @@
 // Page 156 if roll
 
-use crate::{chapter_1::race::RaceKind, dice::Dice, simulator::Simulator};
+use crate::{
+    chapter_1::race::RaceKind,
+    chapter_3::{Abilities, Charisma, Intelligence, Physique, Temperament, Wisdom},
+    dice::Dice,
+    simulator::Simulator,
+};
 
-#[derive(Debug)]
-struct PhysiqueModifiers {
-    physical_fitness: i32,
-    strength: i32,
-    bodily_attractiveness: i32,
-}
+// #[derive(Debug)]
+// struct PhysiqueModifiers {
+//     physical_fitness: i32,
+//     strength: i32,
+//     bodily_attractiveness: i32,
+// }
 
-#[derive(Debug)]
-struct CharismaModifiers {
-    face: i32,
-}
+// #[derive(Debug)]
+// struct CharismaModifiers {
+//     face: i32,
+// }
 
-#[derive(Debug)]
-struct IntelligenceModifiers {
-    language: i32,
-    math: i32,
-    spatial: i32,
-}
+// #[derive(Debug)]
+// struct IntelligenceModifiers {
+//     language: i32,
+//     math: i32,
+//     spatial: i32,
+// }
 
-#[derive(Debug)]
-struct WisdomModifiers {
-    drive: i32,
-    intuition: i32,
-    reflection: i32,
-}
+// #[derive(Debug)]
+// struct WisdomModifiers {
+//     drive: i32,
+//     intuition: i32,
+//     reflection: i32,
+// }
 
-#[derive(Debug)]
-struct TemperanceModifiers {
-    sanguine: i32,
-    choleric: i32,
-}
+// #[derive(Debug)]
+// // Percentage-based
+// pub struct GenderModifiers {
+//     pub physique: PhysiqueModifiers,
+//     pub charisma: CharismaModifiers,
+//     pub intelligence: IntelligenceModifiers,
+//     pub wisdom: WisdomModifiers,
+//     pub temperament: TemperanceModifiers,
+// }
 
-#[derive(Debug)]
-// Percentage-based
-pub struct GenderModifiers {
-    physique: PhysiqueModifiers,
-    charisma: CharismaModifiers,
-    intelligence: IntelligenceModifiers,
-    wisdom: WisdomModifiers,
-    temperament: TemperanceModifiers,
-}
+// #[derive(Debug)]
+// pub struct GenderModifiers2 {
+//     pub physique: Physique,
+//     pub charisma: Charisma,
+//     pub intelligence: Intelligence,
+//     pub wisdom: Wisdom,
+//     pub temperament: TemperanceModifiers,
+// }
 
-impl GenderModifiers {
-    pub fn male() -> Self {
-        Self {
-            physique: PhysiqueModifiers {
-                physical_fitness: 5,
-                strength: 30,
-                bodily_attractiveness: -3,
-            },
+// impl GenderModifiers {
+//     pub fn male() -> Self {
+//         Self {
+//             physique: PhysiqueModifiers {
+//                 physical_fitness: 5,
+//                 strength: 30,
+//                 bodily_attractiveness: -3,
+//             },
 
-            charisma: CharismaModifiers { face: -3 },
+//             charisma: CharismaModifiers { face: -3 },
 
-            intelligence: IntelligenceModifiers {
-                language: -2,
-                math: 3,
-                spatial: 3,
-            },
+//             intelligence: IntelligenceModifiers {
+//                 language: -2,
+//                 math: 3,
+//                 spatial: 3,
+//             },
 
-            wisdom: WisdomModifiers {
-                drive: 2,
-                intuition: -5,
-                reflection: -4,
-            },
+//             wisdom: WisdomModifiers {
+//                 drive: 2,
+//                 intuition: -5,
+//                 reflection: -4,
+//             },
 
-            temperament: TemperanceModifiers {
-                sanguine: -2,
-                choleric: 2,
-            },
-        }
-    }
+//             temperament: TemperanceModifiers {
+//                 sanguine: -2,
+//                 choleric: 2,
+//             },
+//         }
+//     }
 
-    pub fn female() -> Self {
-        Self {
-            physique: PhysiqueModifiers {
-                physical_fitness: -5,
-                strength: -30,
-                bodily_attractiveness: 3,
-            },
+//     pub fn female() -> Self {
+//         Self {
+//             physique: PhysiqueModifiers {
+//                 physical_fitness: -5,
+//                 strength: -30,
+//                 bodily_attractiveness: 3,
+//             },
 
-            charisma: CharismaModifiers { face: 3 },
+//             charisma: CharismaModifiers { face: 3 },
 
-            intelligence: IntelligenceModifiers {
-                language: 2,
-                math: -3,
-                spatial: -3,
-            },
+//             intelligence: IntelligenceModifiers {
+//                 language: 2,
+//                 math: -3,
+//                 spatial: -3,
+//             },
 
-            wisdom: WisdomModifiers {
-                drive: -2,
-                intuition: 5,
-                reflection: 4,
-            },
+//             wisdom: WisdomModifiers {
+//                 drive: -2,
+//                 intuition: 5,
+//                 reflection: 4,
+//             },
 
-            temperament: TemperanceModifiers {
-                sanguine: 2,
-                choleric: -2,
-            },
-        }
-    }
-}
+//             temperament: TemperanceModifiers {
+//                 sanguine: 2,
+//                 choleric: -2,
+//             },
+//         }
+//     }
+// }
 
 #[derive(Debug)]
 pub enum Gender {
-    Male(GenderModifiers),
-    Female(GenderModifiers),
+    Male(Abilities),
+    Female(Abilities),
 }
 
 impl Gender {
     pub fn male() -> Self {
-        Self::Male(GenderModifiers::male())
+        Self::Male(Abilities::male())
     }
 
     pub fn female() -> Self {
-        Self::Female(GenderModifiers::female())
+        Self::Female(Abilities::female())
     }
 
     pub fn roll_random(sim: &mut impl Simulator, race: &RaceKind) -> Self {
@@ -136,9 +144,9 @@ impl Gender {
         };
 
         if final_num > 52 {
-            Gender::Male(GenderModifiers::male())
+            Gender::Male(Abilities::male())
         } else {
-            Gender::Female(GenderModifiers::female())
+            Gender::Female(Abilities::female())
         }
     }
 }

@@ -15,6 +15,7 @@ impl std::ops::Add for Abilities {
             dexterity: self.dexterity + rhs.dexterity,
             intelligence: self.intelligence + rhs.intelligence,
             wisdom: self.wisdom + rhs.wisdom,
+            temperament: self.temperament + rhs.temperament,
         }
     }
 }
@@ -26,6 +27,7 @@ pub struct Abilities {
     pub dexterity: Dexterity,
     pub intelligence: Intelligence,
     pub wisdom: Wisdom,
+    pub temperament: Temperament,
 }
 
 impl Abilities {
@@ -33,6 +35,70 @@ impl Abilities {
     // SAFETY: Caller must guarantee `value` fits in an i32
     unsafe fn calculate_value(value: u64) -> i32 {
         unsafe { (value as f32 / 5.).to_int_unchecked::<i32>() - 1 }
+    }
+
+    pub fn male() -> Self {
+        Self {
+            physique: Physique {
+                physical_fitness: 5,
+                strength: 30,
+                bodily_attractiveness: -3,
+                ..Default::default()
+            },
+            charisma: Charisma {
+                facial: -3,
+                ..Default::default()
+            },
+            dexterity: Default::default(),
+            intelligence: Intelligence {
+                language: -2,
+                math: 3,
+                analytic: 3,
+                ..Default::default()
+            },
+            wisdom: Wisdom {
+                drive: 2,
+                intuition: -5,
+                reflection: -4,
+                ..Default::default()
+            },
+            temperament: Temperament {
+                sanguine: -2,
+                choleric: 2,
+            },
+        }
+    }
+
+    pub fn female() -> Self {
+        Self {
+            physique: Physique {
+                physical_fitness: -5,
+                strength: -30,
+                bodily_attractiveness: 3,
+                ..Default::default()
+            },
+            charisma: Charisma {
+                facial: 3,
+                ..Default::default()
+            },
+            dexterity: Default::default(),
+            intelligence: Intelligence {
+                language: 2,
+                math: -3,
+                analytic: -3,
+                ..Default::default()
+            },
+            wisdom: Wisdom {
+                drive: -2,
+                intuition: 5,
+                reflection: 4,
+                ..Default::default()
+            },
+            temperament: Temperament {
+                sanguine: 2,
+                choleric: -2,
+            },
+        }
     }
 
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
@@ -74,58 +140,80 @@ impl Abilities {
             reflection: x(),
         };
 
+        // TODO: Fix
+        let temperament = Temperament {
+            sanguine: x(),
+            choleric: x(),
+        };
+
         Self {
             physique,
             charisma,
             dexterity,
             intelligence,
             wisdom,
+            temperament,
         }
     }
 
     pub fn apply_modifiers(self, race: &Race, gender: &Gender) -> Self {
-        self + race.modifiers.sub_ability.clone()
+        let abilities = self + race.modifiers.sub_ability.clone();
+
+        let modifiers = match gender {
+            Gender::Male(m) => m,
+            Gender::Female(m) => m,
+        };
+
+        // TODO: Modify percentage based
+        // abilities + modifiers.clone()
+        todo!()
     }
 }
 
 #[derive(Debug, Clone, Default, Summable)]
 pub struct Physique {
-    physical_fitness: i32,
-    strength: i32,
-    bodily_attractiveness: i32,
-    health: i32,
+    pub physical_fitness: i32,
+    pub strength: i32,
+    pub bodily_attractiveness: i32,
+    pub health: i32,
 }
 
 #[derive(Debug, Clone, Default, Summable)]
 pub struct Charisma {
-    facial: i32,
-    vocal: i32,
-    kinetic: i32,
-    rhetorical: i32,
+    pub facial: i32,
+    pub vocal: i32,
+    pub kinetic: i32,
+    pub rhetorical: i32,
 }
 
 #[derive(Debug, Clone, Default, Summable)]
 pub struct Dexterity {
-    hand_eye_coordination: i32,
-    agility: i32,
-    reaction_speed: i32,
-    enunciation: i32,
+    pub hand_eye_coordination: i32,
+    pub agility: i32,
+    pub reaction_speed: i32,
+    pub enunciation: i32,
 }
 
 #[derive(Debug, Clone, Default, Summable)]
 pub struct Intelligence {
-    language: i32,
-    math: i32,
-    analytic: i32,
-    spatial: i32,
+    pub language: i32,
+    pub math: i32,
+    pub analytic: i32,
+    pub spatial: i32,
 }
 
 #[derive(Debug, Clone, Default, Summable)]
 pub struct Wisdom {
-    drive: i32,
-    intuition: i32,
-    common_sense: i32,
-    reflection: i32,
+    pub drive: i32,
+    pub intuition: i32,
+    pub common_sense: i32,
+    pub reflection: i32,
+}
+
+#[derive(Debug, Clone, Default, Summable)]
+pub struct Temperament {
+    pub sanguine: i32,
+    pub choleric: i32,
 }
 
 #[cfg(test)]
