@@ -1,0 +1,40 @@
+---
+source: src/chapter_3/mod.rs
+expression: a
+---
+Abilities(
+  physique: Physique(
+    physical_fitness: 105,
+    strength: 130,
+    bodily_attractiveness: 97,
+    health: 100,
+  ),
+  charisma: Charisma(
+    facial: 97,
+    vocal: 100,
+    kinetic: 100,
+    rhetorical: 100,
+  ),
+  dexterity: Dexterity(
+    hand_eye_coordination: 100,
+    agility: 100,
+    reaction_speed: 100,
+    enunciation: 100,
+  ),
+  intelligence: Intelligence(
+    language: 98,
+    math: 103,
+    analytic: 103,
+    spatial: 100,
+  ),
+  wisdom: Wisdom(
+    drive: 102,
+    intuition: 95,
+    common_sense: 100,
+    reflection: 96,
+  ),
+  temperament: Temperament(
+    sanguine: 98,
+    choleric: 102,
+  ),
+)

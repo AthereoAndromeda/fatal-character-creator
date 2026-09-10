@@ -1,3 +1,5 @@
+#![feature(int_roundings)]
+
 mod dice;
 mod simulator;
 use simulator::*;

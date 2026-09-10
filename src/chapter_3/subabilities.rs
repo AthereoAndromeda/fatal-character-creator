@@ -1,8 +1,9 @@
 //! Subabilities to [`Abilities`](super::Abilities)
 
-use fatal_macros::Summable;
+use fatal_macros::{GenderModifiers, Summable};
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Physique {
     pub physical_fitness: i32,
     pub strength: i32,
@@ -10,7 +11,8 @@ pub struct Physique {
     pub health: i32,
 }
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Charisma {
     pub facial: i32,
     pub vocal: i32,
@@ -18,7 +20,8 @@ pub struct Charisma {
     pub rhetorical: i32,
 }
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Dexterity {
     pub hand_eye_coordination: i32,
     pub agility: i32,
@@ -26,7 +29,8 @@ pub struct Dexterity {
     pub enunciation: i32,
 }
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Intelligence {
     pub language: i32,
     pub math: i32,
@@ -34,7 +38,8 @@ pub struct Intelligence {
     pub spatial: i32,
 }
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Wisdom {
     pub drive: i32,
     pub intuition: i32,
@@ -42,7 +47,8 @@ pub struct Wisdom {
     pub reflection: i32,
 }
 
-#[derive(Debug, Clone, Default, Summable)]
+#[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
+#[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
 pub struct Temperament {
     pub sanguine: i32,
     pub choleric: i32,
