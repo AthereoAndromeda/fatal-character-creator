@@ -23,6 +23,7 @@ impl std::ops::Add for Abilities {
 }
 
 #[derive(Debug, Clone, Default)]
+/// Character Abilities
 pub struct Abilities {
     pub physique: Physique,
     pub charisma: Charisma,
@@ -39,6 +40,7 @@ impl Abilities {
         unsafe { (value as f32 / 5.).to_int_unchecked::<i32>() - 1 }
     }
 
+    /// Percentage-based modifiers
     pub fn male() -> Self {
         Self {
             physique: Physique {
@@ -71,6 +73,7 @@ impl Abilities {
         }
     }
 
+    /// Percentage-based modifiers
     pub fn female() -> Self {
         Self {
             physique: Physique {

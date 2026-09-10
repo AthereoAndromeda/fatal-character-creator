@@ -1,3 +1,5 @@
+//! Subabilities to [`Abilities`](super::Abilities)
+
 use fatal_macros::Summable;
 
 #[derive(Debug, Clone, Default, Summable)]
