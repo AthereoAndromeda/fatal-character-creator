@@ -294,7 +294,7 @@ mod test {
 
     #[rstest::rstest]
     #[case(RaceKind::Human)]
-    fn apply_modifiers(ability: Abilities, #[case] racekind: RaceKind) {
+    fn apply_modifiers_male(ability: Abilities, #[case] racekind: RaceKind) {
         set_snapshot_suffix!("{}", racekind);
         let race = Race::from(racekind);
         let a = ability.apply_modifiers(&race, &Gender::Male);
@@ -303,10 +303,28 @@ mod test {
 
     #[rstest::rstest]
     #[case(RaceKind::Human)]
-    fn apply_modifiers_101(ability_101: Abilities, #[case] racekind: RaceKind) {
+    fn apply_modifiers_101_male(ability_101: Abilities, #[case] racekind: RaceKind) {
         set_snapshot_suffix!("{}", racekind);
         let race = Race::from(racekind);
         let a = ability_101.apply_modifiers(&race, &Gender::Male);
+        assert_ron_snapshot!(a);
+    }
+
+    #[rstest::rstest]
+    #[case(RaceKind::Human)]
+    fn apply_modifiers_female(ability: Abilities, #[case] racekind: RaceKind) {
+        set_snapshot_suffix!("{}", racekind);
+        let race = Race::from(racekind);
+        let a = ability.apply_modifiers(&race, &Gender::Female);
+        assert_ron_snapshot!(a);
+    }
+
+    #[rstest::rstest]
+    #[case(RaceKind::Human)]
+    fn apply_modifiers_101_female(ability_101: Abilities, #[case] racekind: RaceKind) {
+        set_snapshot_suffix!("{}", racekind);
+        let race = Race::from(racekind);
+        let a = ability_101.apply_modifiers(&race, &Gender::Female);
         assert_ron_snapshot!(a);
     }
 
