@@ -118,7 +118,6 @@ impl Abilities {
     }
 
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
-        // SAFETY: 10d100 roll is guaranteed to fit in an i32, and is not NaN/Infinite
         let mut x = || Self::calculate_value(sim.roll_10d100());
 
         let physique = Physique {
