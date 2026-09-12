@@ -72,7 +72,7 @@ pub fn apply_gender_modifiers(tokens: TokenStream) -> TokenStream {
                 impl #ident {
                     pub fn apply_gender_modifiers(&self, modifiers: Self) -> Self {
                         #(
-                            let #ident_v = (self.#v * ((100 + modifiers.#v))).div_euclid(100);
+                            let #ident_v = (self.#v * (100 + modifiers.#v)) / 100;
                         )*
 
                         Self {
