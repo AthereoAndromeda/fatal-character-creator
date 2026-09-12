@@ -1,0 +1,10 @@
+---
+source: src/chapter_3/subabilities.rs
+expression: new
+---
+Physique(
+  physical_fitness: 105,
+  strength: 130,
+  bodily_attractiveness: 97,
+  health: 100,
+)

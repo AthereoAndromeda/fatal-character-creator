@@ -56,8 +56,79 @@ pub struct Temperament {
 
 #[cfg(test)]
 mod test {
-    use crate::{chapter_3::Abilities, simulator::Simulator, test::sim};
-    use insta::assert_debug_snapshot;
+    use super::*;
+    use crate::{chapter_3::Abilities, set_snapshot_suffix, simulator::Simulator, test::sim};
+    use insta::{assert_debug_snapshot, assert_ron_snapshot};
+
+    macro_rules! modifiers_test {
+        ($mod_ident:ident, $modifier:expr) => {
+            pastey::paste! {
+                #[test]
+                fn [<gender_modifiers_ $mod_ident>]() {
+                    set_snapshot_suffix!("{}", stringify!($mod_ident));
+                    let mo = $modifier;
+
+                    let mods = Abilities::male_modifiers().$mod_ident;
+                    let new = mo.apply_gender_modifiers(mods);
+                    assert_ron_snapshot!(new);
+
+                    let mods = Abilities::female_modifiers().$mod_ident;
+                    let new = mo.apply_gender_modifiers(mods);
+                    assert_ron_snapshot!(new);
+                }
+            }
+        };
+    }
+
+    modifiers_test!(
+        physique,
+        Physique {
+            physical_fitness: 100,
+            strength: 100,
+            bodily_attractiveness: 100,
+            health: 100,
+        }
+    );
+
+    modifiers_test!(
+        charisma,
+        Charisma {
+            facial: 100,
+            kinetic: 100,
+            rhetorical: 100,
+            vocal: 100,
+        }
+    );
+
+    modifiers_test!(
+        dexterity,
+        Dexterity {
+            hand_eye_coordination: 100,
+            agility: 100,
+            reaction_speed: 100,
+            enunciation: 100
+        }
+    );
+
+    modifiers_test!(
+        intelligence,
+        Intelligence {
+            language: 100,
+            math: 100,
+            analytic: 100,
+            spatial: 100
+        }
+    );
+
+    modifiers_test!(
+        wisdom,
+        Wisdom {
+            drive: 100,
+            intuition: 100,
+            common_sense: 100,
+            reflection: 100
+        }
+    );
 
     #[rstest::rstest]
     fn roll_abilities(mut sim: impl Simulator) {

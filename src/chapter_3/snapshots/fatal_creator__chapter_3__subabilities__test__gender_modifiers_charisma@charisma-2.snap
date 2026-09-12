@@ -1,0 +1,10 @@
+---
+source: src/chapter_3/subabilities.rs
+expression: new
+---
+Charisma(
+  facial: 103,
+  vocal: 100,
+  kinetic: 100,
+  rhetorical: 100,
+)

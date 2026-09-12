@@ -1,0 +1,10 @@
+---
+source: src/chapter_3/subabilities.rs
+expression: new
+---
+Dexterity(
+  hand_eye_coordination: 100,
+  agility: 100,
+  reaction_speed: 100,
+  enunciation: 100,
+)

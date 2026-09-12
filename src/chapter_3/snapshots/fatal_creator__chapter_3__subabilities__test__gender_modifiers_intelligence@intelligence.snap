@@ -1,0 +1,10 @@
+---
+source: src/chapter_3/subabilities.rs
+expression: new
+---
+Intelligence(
+  language: 98,
+  math: 103,
+  analytic: 103,
+  spatial: 100,
+)
