@@ -15,7 +15,6 @@
     cargo-insta
     cargo-nextest
     cargo-expand
-    rust-analyzer
   ];
 
   # https://devenv.sh/languages/
