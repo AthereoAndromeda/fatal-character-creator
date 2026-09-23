@@ -416,6 +416,6 @@ mod test {
     #[rstest::rstest]
     fn apply_modifications(mut sim: impl Simulator) {
         let ab = Abilities::roll_random(&mut sim);
-        ab.apply_modifiers(&Race::human(), &Gender::Male);
+        ab.apply_modifiers(&Race::from(RaceKind::Human), &Gender::Male);
     }
 }

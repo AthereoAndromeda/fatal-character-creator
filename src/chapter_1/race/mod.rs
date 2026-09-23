@@ -3,31 +3,38 @@ pub use modifiers::*;
 
 use crate::{dice::Dice as _, simulator::Simulator};
 
+macro_rules! generate_from {
+    ($($item:ident),* $(,)?) => {
+        impl From<RaceKind> for Race {
+            fn from(value: RaceKind) -> Self {
+                match value {
+                    $(
+                        RaceKind::$item => {
+                            let kind = RaceKind::$item;
+                            let modifiers = RaceModifiers::from(kind);
+
+                            Self { kind, modifiers }
+                        },
+                    )*
+
+                    _ => todo!()
+                }
+            }
+        }
+    };
+}
+
 #[derive(Debug, Clone)]
 pub struct Race {
     pub kind: RaceKind,
     pub modifiers: RaceModifiers,
 }
 
-impl From<RaceKind> for Race {
-    fn from(value: RaceKind) -> Self {
-        match value {
-            RaceKind::Human => Self::human(),
-            _ => todo!(),
-        }
-    }
-}
+generate_from!(Human, Anakim);
 
 impl Race {
     pub fn roll_random(sim: &mut impl Simulator) -> Self {
         let kind = RaceKind::roll_random(sim);
-        let modifiers = RaceModifiers::from(kind);
-
-        Self { kind, modifiers }
-    }
-
-    pub fn human() -> Self {
-        let kind = RaceKind::Human;
         let modifiers = RaceModifiers::from(kind);
 
         Self { kind, modifiers }
