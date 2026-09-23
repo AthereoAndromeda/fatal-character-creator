@@ -80,6 +80,7 @@ impl Abilities {
             temperament: Temperament {
                 sanguine: -2,
                 choleric: 2,
+                ..Default::default()
             },
         }
     }
@@ -113,6 +114,7 @@ impl Abilities {
             temperament: Temperament {
                 sanguine: 2,
                 choleric: -2,
+                ..Default::default()
             },
         }
     }
@@ -155,10 +157,15 @@ impl Abilities {
             reflection: x(),
         };
 
-        // TODO: Fix
-        let temperament = Temperament {
-            sanguine: x(),
-            choleric: x(),
+        // SAFETY: It is safe to cast `roll_1d100() -> u64` to an `i32` since the returned
+        // value is always guaranteed to fit in an i32.
+        let temperament = unsafe {
+            Temperament {
+                sanguine: sim.roll_1d100().unchecked_cast(),
+                choleric: sim.roll_1d100().unchecked_cast(),
+                melancholic: sim.roll_1d100().unchecked_cast(),
+                phlegmatic: sim.roll_1d100().unchecked_cast(),
+            }
         };
 
         Self {
@@ -237,6 +244,8 @@ mod test {
             temperament: Temperament {
                 sanguine: 100,
                 choleric: 100,
+                melancholic: 100,
+                phlegmatic: 100,
             },
         }
     }
@@ -277,6 +286,8 @@ mod test {
             temperament: Temperament {
                 sanguine: 101,
                 choleric: 101,
+                melancholic: 101,
+                phlegmatic: 101,
             },
         }
     }
@@ -365,6 +376,8 @@ mod test {
             temperament: Temperament {
                 sanguine: -2,
                 choleric: 2,
+                melancholic: 0,
+                phlegmatic: 0,
             },
         }
         ");
@@ -408,6 +421,8 @@ mod test {
             temperament: Temperament {
                 sanguine: 2,
                 choleric: -2,
+                melancholic: 0,
+                phlegmatic: 0,
             },
         }
         ");

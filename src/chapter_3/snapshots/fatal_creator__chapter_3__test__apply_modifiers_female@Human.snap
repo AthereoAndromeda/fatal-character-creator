@@ -36,5 +36,7 @@ Abilities(
   temperament: Temperament(
     sanguine: 102,
     choleric: 98,
+    melancholic: 100,
+    phlegmatic: 100,
   ),
 )

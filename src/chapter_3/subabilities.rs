@@ -47,11 +47,18 @@ pub struct Wisdom {
     pub reflection: i32,
 }
 
+// TODO: Add the other temperament modifiers
 #[derive(Debug, Clone, Copy, Default, Summable, GenderModifiers)]
 #[cfg_attr(test, derive(serde::Serialize, serde::Deserialize))]
+/// Describes the mental health and temperament of a character
+///
+/// # Reference Page
+/// Chapter 5: Mind, p. 124
 pub struct Temperament {
     pub sanguine: i32,
     pub choleric: i32,
+    pub melancholic: i32,
+    pub phlegmatic: i32,
 }
 
 #[cfg(test)]
@@ -166,8 +173,10 @@ mod test {
                 reflection: 131,
             },
             temperament: Temperament {
-                sanguine: 188,
-                choleric: 183,
+                sanguine: 95,
+                choleric: 92,
+                melancholic: 70,
+                phlegmatic: 49,
             },
         }
         ");

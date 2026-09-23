@@ -1,4 +1,4 @@
-#![feature(int_roundings)]
+#![feature(int_roundings, integer_casts)]
 
 mod dice;
 mod simulator;
